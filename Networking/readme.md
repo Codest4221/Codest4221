@@ -1,3 +1,3 @@
-Work Field: Networking_
-Tools: Python, Socket, OS, Threading,_
-In charge: İbrahim Mete Bingöl_
+Work Field: Networking\
+Tools: Python, Socket, OS, Threading,\
+In charge: İbrahim Mete Bingöl\
