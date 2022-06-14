@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import cv2 as cv
 import socket as con
-import os 
+import os
 import sys
 import threading as thr
 from PIL import ImageTk, Image
@@ -17,13 +17,11 @@ import pickle
 
 
 class VoiceA():
-
-
     def __init__(self) -> None:
-        ct.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
+        ct.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
         ct.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
         self.codest = cv.imread("codest.png",1)
-        #self.codest = cv.cvtColor(self.codest,cv.COLOR_BGR2RGBA)
+        self.codest = cv.cvtColor(self.codest,cv.COLOR_BGR2RGBA)
         self.localHostname = soc.gethostname()
         self.localIP = soc.gethostbyname(self.localHostname)
         self.addressFamily = soc.AF_INET
@@ -44,7 +42,7 @@ class VoiceA():
         self.cameraLivesValue = 0
     def serverAcceptor(self):
     # In this function is acceptor function. In other words, the server accept each client which try to connect.
-        # Accept client 
+        # Accept client
         try:
             client , address = self.serverSocket.accept()
             self.client = client
@@ -57,43 +55,50 @@ class VoiceA():
             self.history.insert(tk.END,"The server socket can be broken\n")
             return 0
     def loopAcceptorThread(self):
-    # This is fucntion to parellel executing. In other words, the accept fucntion is waiting until client connection. To continue program with acceptor, the thread method is used. 
+    # This is fucntion to parellel executing. In other words, the accept fucntion is waiting until client connection. To continue program with acceptor, the thread method is used.
         self.loopfunction = thr.Thread(target=self.serverAcceptor)
         self.loopfunction.start()
     def build(self):
         self.entry1 = ct.CTkEntry(self.GUIobeject,textvariable=self.localIP)
         self.entry1.insert(tk.END,"IP")
-        self.entry1.place(x=400,y=800)
+        self.entry1.place(x=400,y=795)
         self.entry2 = ct.CTkEntry(self.GUIobeject,textvariable=self.localPort)
         self.entry2.insert(tk.END,"port")
-        self.entry2.place(x=550,y=800)
+        self.entry2.place(x=550,y=795)
         self.history = tk.Text(self.GUIobeject, height = 10, width = 60)
-        self.history.place(x=400,y=620)
-        Button1 = ct.CTkButton(self.GUIobeject,text="Close App",command=self.GUIobeject.destroy,height=2,width=10)
-        Button1.place(x=1400,y=50)
-        Button7 = ct.CTkButton(self.GUIobeject,text="Initiliaze",command=self.serverInitializer,height=1,width=10)
-        Button7.place(x=700,y=800)
-        Button8 = ct.CTkButton(self.GUIobeject,text="Accept",command=self.loopAcceptorThread,height=1,width=10)
-        Button8.place(x=800,y=800)
-        Button2 = ct.CTkButton(self.GUIobeject,text="Close Camera",command=self.cameraLives,height=2,width=10)
-        Button2.place(x=150,y=650)
-        Button3 = ct.CTkButton(self.GUIobeject,text="Take Photo",command=self.saver,height=2,width=10)
-        Button3.place(x=50,y=650)
-        Button4 = ct.CTkButton(self.GUIobeject,text="Open Camera",command=self.cameraOpener,height=2,width=10)
-        Button4.place(x=250,y=650)
-        Button5 = ct.CTkButton(self.GUIobeject,text="Send",command=self.sender,height=2,width=10)
-        Button5.place(x=1200,y=50)
-        Button5 = ct.CTkButton(self.GUIobeject,text="Delete",command=self.deleter,height=2,width=10)
-        Button5.place(x=1300,y=50)
-        Button6 = ct.CTkButton(self.GUIobeject,text="show",command=self.shower,height=2,width=10)
-        Button6.place(x=1100,y=50)
-        self.treeview = ttk.Treeview(self.GUIobeject,columns=(1, 2, 3), show='headings', height=35)
-        self.treeview.place(y=100,x=900)
+        self.history.place(x=500,y=770)
+
+        Button7 = ct.CTkButton(self.GUIobeject,text="Initiliaze",command=self.serverInitializer,height=28,width=80)
+        Button7.place(x=700,y=795)
+        Button8 = ct.CTkButton(self.GUIobeject,text="Accept",command=self.loopAcceptorThread,height=28,width=80)
+        Button8.place(x=800,y=795)
+
+        Button2 = ct.CTkButton(self.GUIobeject,text="Close Camera",command=self.cameraLives,height=30,width=100)
+        Button2.place(x=160,y=615)
+        Button3 = ct.CTkButton(self.GUIobeject,text="Take Photo",command=self.saver,height=30,width=100)
+        Button3.place(x=40,y=615)
+        Button4 = ct.CTkButton(self.GUIobeject,text="Open Camera",command=self.cameraOpener,height=30,width=100)
+        Button4.place(x=280,y=615)
+
+        Button1 = ct.CTkButton(self.GUIobeject,text="Close App",command=self.GUIobeject.destroy,height=30,width=85)
+        Button1.place(x=1420,y=44)
+        Button5 = ct.CTkButton(self.GUIobeject,text="Send",command=self.sender,height=30,width=85)
+        Button5.place(x=1220,y=44)
+        Button5 = ct.CTkButton(self.GUIobeject,text="Delete",command=self.deleter,height=30,width=85)
+        Button5.place(x=1320,y=44)
+        Button6 = ct.CTkButton(self.GUIobeject,text="Show",command=self.shower,height=30,width=85)
+        Button6.place(x=1120,y=44)
+
+        self.treeview = ttk.Treeview(self.GUIobeject,columns=(1,2,3) ,show='headings', height=45)
+        self.treeview.place(y=100,x=1130)
         self.treeview.heading(1, text='PhotoID')
         self.treeview.heading(2, text='Date')
         self.treeview.heading(3, text='Photo Type')
+        self.treeview.column(1,minwidth=80, width=250)
+        self.treeview.column(2,minwidth=40, width=250)
+        self.treeview.column(3,minwidth=40, width=250)
         verscrlbar = ttk.Scrollbar(self.GUIobeject, orient ="vertical",command = self.treeview.yview)
-        verscrlbar.place(x=1500,y=400)
+        verscrlbar.place(x=1883,y=400)
         self.label1 = ct.CTkLabel(self.GUIobeject,text="CODEST TEAM")
         self.label1.place(y=20,x=100)
         self.label2 = ct.CTkLabel(self.GUIobeject)
@@ -113,18 +118,18 @@ class VoiceA():
         self.localPort = int(self.entry2.get())
         self.localIP = self.entry1.get()
         try:
-            # Socket object creation 
+            # Socket object creation
             self.serverSocket = soc.socket(self.addressFamily,self.protocol)
             # Diving network
-            
+
             self.serverSocket.bind((self.localIP,self.localPort))
             self.serverSocket.listen(10)
             # If the function work succesfully, the list below is returned.
-            self.history.insert(tk.END,"The server is created succesfully.\n") 
+            self.history.insert(tk.END,"The server is created succesfully.\n")
             return 1
         except:
             # Not, this
-            self.history.insert(tk.END,"The server cannot be created.\n") 
+            self.history.insert(tk.END,"The server cannot be created.\n")
             return 0
     def shower(self):
         image = self.treeview.item(self.treeview.selection())["values"][0]
@@ -178,7 +183,7 @@ class VoiceA():
         self.cap = cv.VideoCapture(cv.CAP_DSHOW)
         while self.cap.isOpened():
             ret, frame = self.cap.read()
-            frame[-self.codest.shape[0]:,-self.codest.shape[1]:] = self.codest 
+            frame[-self.codest.shape[0]:,-self.codest.shape[1]:] = self.codest
             cv.putText(frame,str(self.i),(50,50),cv.FONT_HERSHEY_COMPLEX,1,(255,0,0),2)
             cv2image = cv.cvtColor(frame, cv.COLOR_BGR2RGBA)
             img = Image.fromarray(cv2image)
@@ -189,7 +194,7 @@ class VoiceA():
             self.mainimage = imgtk
             if self.cameraLivesValue == 0:
                 break
-        self.cap.release()    
+        self.cap.release()
     def destroy(self):
         self.GUIobeject.mainloop()
     def cameraOpener(self):
