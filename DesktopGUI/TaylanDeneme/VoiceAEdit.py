@@ -1,14 +1,14 @@
 from pydoc import cli
 import tkinter as tk
 from tkinter import ttk
-#import cv2 as cv
+import cv2 as cv
 import socket as con
 import os
 import sys
 import threading as thr
 from PIL import ImageTk, Image
 import datetime
-#import mediapipe as mp
+import mediapipe as mp
 import struct
 import customtkinter as ct
 import numpy as np
@@ -20,13 +20,13 @@ class VoiceA():
     def __init__(self) -> None:
         ct.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
         ct.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
-        #self.codest = cv.imread("codest.png",1)
+        self.codest = cv.imread("codest.png",1)
         #self.codest = cv.cvtColor(self.codest,cv.COLOR_BGR2RGBA)
         self.localHostname = soc.gethostname()
         self.localIP = soc.gethostbyname(self.localHostname)
         self.addressFamily = soc.AF_INET
         self.protocol = soc.SOCK_STREAM
-        #self.encodelist =  [int(cv.IMWRITE_JPEG_QUALITY), 90]
+        self.encodelist =  [int(cv.IMWRITE_JPEG_QUALITY), 90]
         self.localPort = 80
         self.GUIobeject = ct.CTk()
         self.GUIobeject.attributes('-fullscreen', True)
@@ -103,7 +103,7 @@ class VoiceA():
         self.label1.place(y=20,x=100)
         self.label2 = ct.CTkLabel(self.GUIobeject)
         self.label2.place(y=100,x=40)
-        #cv.waitKey(1000)
+        cv.waitKey(1000)
     def deleter(self):
         self.treeview.delete(self.treeview.selection()[0])
     def sender(self):
